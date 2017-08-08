@@ -26,7 +26,7 @@ This page provides instructions on how to contribute to the DC/OS documentation.
 1. Make your changes.
 1. Commit your changes (e.g. `git commit -am "These are my changes"`).
 1. Push your changes upstream (e.g. `git push origin <your-name>/<your-branch-name>`).
-1. Submit a [pull request](https://help.github.com/articles/using-pull-requests/) to `dcos-docs-enterprise`.
+1. Submit a [pull request](https://help.github.com/articles/using-pull-requests/) to `dcos-docs`.
 
 ### Detailed
 
@@ -138,16 +138,43 @@ Pick one of the below methods to build your changes, integrated with the rest of
 ### Automated build
 This method builds and launches a Docker container. For more information, see this [PR](https://github.com/dcos/dcos-docs/pull/532).
 
-#### Prerequisite
+#### Prerequisites
 
 Latest version of [Docker](https://docs.docker.com/engine/installation/) installed and running.
 
+Make command installed.
+
 #### Building
 
-1. Run `sudo make`.
+1. Run `make`
 
-    **Tip:** This can take up to 15 minutes to complete.
-1. Visit [localhost](http://localhost:3000)
+   - *Linux*
+
+   	Running docker commands as a normal user in Linux requires a manual installation step to add the user to the docker group.
+
+   	If your user is already in the docker group :
+
+  	 ```bash
+   	make
+  	 ```
+    
+   	If your user is not in the docker group :
+
+   	```bash
+   	sudo make
+   	```
+
+   - *MacOS*
+
+	On MacOS users can run docker commands by default
+	
+   	```bash
+   	make
+   	```
+
+   **Tip:** This can take up to 15 minutes to complete.
+
+1. Visit [localhost:3000](http://localhost:3000)
 
 #### Troubleshooting
 
@@ -161,97 +188,99 @@ We've implemented the [dcos-docs](https://github.com/dcos/dcos-docs) repo as a [
 
 1.  [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 
-  -  *CentOS*
+    -  *CentOS*
 
-     ```bash
-     sudo yum install -y ruby
-     ```
+     	```bash
+     	sudo yum install -y ruby
+    	```
 
-  -  *MacOS using [Homebrew](http://brew.sh/)*
+    -  *MacOS using [Homebrew](http://brew.sh/)*
 
-      ```bash
-      brew install ruby
-      ```
+    	```bash
+      	brew install ruby
+    	```
 
 1.  [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-  -  *CentOS*
+    -  *CentOS*
 
-      ```bash
-      sudo yum install git
-      ```
+      	```bash
+      	sudo yum install git
+      	```
 
-  -  *MacOS using [Homebrew](http://brew.sh/)*
+    -  *MacOS using [Homebrew](http://brew.sh/)*
 
-      ```bash
-      brew install git
-      ```
+      	```bash
+      	brew install git
+      	```
 
-1.  Install EPEL repo, [Node](https://docs.npmjs.com/getting-started/installing-node), and NPM.
+1.  Install [Node](https://docs.npmjs.com/getting-started/installing-node), and NPM.
 
-  -  *CentOS*
+    -  *CentOS*
 
-      ```bash
-      sudo yum install -y epel-release && sudo yum install -y nodejs && sudo yum install -y npm && npm update
-      ```
+      	On CentOS we need to add the epel-release repo before we can install Node and NPM
 
-  -  *MacOS using [Homebrew](http://brew.sh/)*
+      	```bash
+      	sudo yum install -y epel-release && sudo yum install -y nodejs && sudo yum install -y npm && npm update
+      	```
 
-      ```bash
-      brew install -y nodejs
-      brew install npm
-      npm update
-      ```
+    -  *MacOS using [Homebrew](http://brew.sh/)*
+
+      	```bash
+      	brew install -y nodejs
+      	brew install npm
+      	npm update
+      	```
 
 1.  nvm 6.3.1
 
-  -  *CentOS*
+    -  *CentOS*
 
-      ```bash
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
-      nvm install 6.3.1 && nvm alias default 6.3.1
-      ```
+      	```bash
+      	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
+      	nvm install 6.3.1 && nvm alias default 6.3.1
+      	```
 
-  -  *MacOS*
+    -  *MacOS*
 
-      ```bash
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
-      nvm install 6.3.1 && nvm alias default 6.3.1
-      ```
+      	```bash
+      	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
+      	nvm install 6.3.1 && nvm alias default 6.3.1
+      	```
 
 1.  [Gulp](http://gulpjs.com/)
 
-  -  *CentOS*
+    -  *CentOS*
 
-      ```bash
-      sudo npm install --global gulp-cli
-      ```
+      	```bash
+      	sudo npm install --global gulp-cli
+      	```
 
-  -  *MacOS*
+    -  *MacOS*
 
-      ```bash
-      npm install --global gulp-cli
-      ```
+      	```bash
+      	npm install --global gulp-cli
+      	```
 
 1. Clone the dcos-website repo.
 
-  ```bash
-  git clone https://github.com/dcos/dcos-website
-  ```
+   ```bash
+   git clone https://github.com/dcos/dcos-website
+   ```
 
 1. Check out the develop branch of `dcos-website`.
 
-  ```bash
-  git checkout develop
-  ```
+   ```bash
+   git checkout develop
+   ```
 
 1. Initialize the `dcos-docs` submodule with the content from the upstream master.
 
-  ```bash
-  git submodule update --init --recursive
-  ```
+   ```bash
+   git submodule update --init --recursive
+   ```
 
-  Optional: replace the content from the upstream master with the content from your local `dcos-docs` repo. Delete the `dcos-website/dcos-dcos` directory and replace it with a symlink to your local `dcos-docs` repo. For example, if your directory structure is `/projects/dcos-website` and `/projects/dcos-docs`, you can issue these commands from the `dcos-website` directory:
+   Optional: replace the content from the upstream master with the content from your local `dcos-docs` repo. Delete the `dcos-website/dcos-dcos` directory and replace it with a symlink to your local `dcos-docs` repo. For example, if your directory structure is `/projects/dcos-website` and `/projects/dcos-docs`, you can issue these commands from the `dcos-website` directory:
 
    ```bash
    rm -r dcos-docs

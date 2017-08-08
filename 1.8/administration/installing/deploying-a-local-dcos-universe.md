@@ -17,9 +17,7 @@ You can install and run DC/OS services on a datacenter without internet access w
 
 # <a name="default"></a>Installing the default Universe packages
 
-1.  [SSH](/docs/1.8/administration/access-node/sshcluster/) to the master nodes and download the [local-universe][1] container to each of your masters.
-
-    **Tip:** The `local-universe.tar.gz` file size is 2 GB or more.
+1.  Because DC/OS 1.8 is not the latest release, you will need to build your own local Universe image. Follow [these instructions][4], skipping step 3.
 
 2.  Load the container into the local Docker instance on each of your master nodes:
 
@@ -91,7 +89,7 @@ You can install and run DC/OS services on a datacenter without internet access w
 
     By default, only the `selected` packages are bundled. If you'd like to get something else, use the build your own [instructions][4].
 
-# <a name="build"></a>Installing a selected set of Universe packages
+# <a name="build"></a>Installing your own set of Universe packages
 
 #### Prerequisites
 
@@ -113,19 +111,18 @@ To install your own set of packages you must build a customized local Universe D
     sudo make base
     ```
 
-3.  Inside the `Makefile` replace `--selected` flag with the comma-separated list of selected packages preceeded by `--include` flag. To minimize the container size and download time, you can select only what you need. If you do not modify the `Makefile`, all *selected* Universe packages will be included. To view which packages are selected, click on the **Universe** tab in the DC/OS web interface. 
+3.  Build the `mesosphere/universe` Docker image and compress it to the `local-universe.tar.gz`
+file. Specify a comma-separated list of package names and versions using the `DCOS_PACKAGE_INCLUDE`
+variable. To minimize the container size and download time, you can select only what you need. If
+you do not use the `DCOS_PACKAGE_INCLUDE` variable, all *selected* Universe packages will be
+included. To view which packages are selected, click on the **Catalog** tab in the DC/OS web
+interface.
 
     ```bash
-    sed -i -e 's/--selected/--include="marathon-lb,zeppelin"/' Makefile
+    sudo make DCOS_VERSION=1.8 DCOS_PACKAGE_INCLUDE="cassandra:1.0.25-3.0.10,marathon:1.4.2" local-universe
     ```
 
-4.  Build `mesosphere/universe` image and compress it to the `local-universe.tar.gz` file:
-
-    ```bash
-    sudo make local-universe
-    ```
-
-5.  Perform steps from 2 to 7 of [Installing the default Universe packages][5] section, except step 6. Run the following command instead:
+4.  Perform steps from 2 to 7 of [Installing the default Universe packages][5] section, except step 6. Run the following command instead:
 
     ```bash
     dcos package repo add local-universe http://master.mesos:8082/repo

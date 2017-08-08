@@ -49,6 +49,7 @@ This topic provides all available configuration parameters. Except where explici
 | [gc_delay](#gc_delay)            | The maximum amount of time to wait before cleaning up the executor directories.                                                                                                                                                           |
 | [log_directory](#log_directory)       | The path to the installer host logs from the SSH processes.                                                                                                                                                                               |
 | [process_timeout](#process_timeout)     | The allowable amount of time, in seconds, for an action to begin after the process forks.                                                                                                                                                 |
+| [mesos_max_completed_tasks_per_framework](#mesos_max_completed_tasks_per_framework)     | The number of completed tasks for each framework that the Mesos master will retain in memory.                                                                                               |
 
 # Security and Authentication
 
@@ -225,6 +226,9 @@ The type of storage backend to use for Exhibitor. You can use internal DC/OS sto
 
 *   `exhibitor_storage_backend: static`
     The Exhibitor storage backend is managed internally within your cluster.
+    
+    **Important:** If [master_discovery](#master_discovery) is set to `master_http_loadbalancer`, then exhibitor_storage_backend cannot be set to `static`.
+    
 *   `exhibitor_storage_backend: zookeeper`
     The ZooKeeper instance for shared storage. If you use a ZooKeeper instance to bootstrap Exhibitor, this ZooKeeper instance must be separate from your DC/OS cluster. You must have at least 3 ZooKeeper instances running at all times for high availability. If you specify `zookeeper`, you must also specify these parameters.
     *   **exhibitor_zk_hosts**
@@ -308,13 +312,19 @@ The path to the installer host logs from the SSH processes. By default this is s
     *  **num_masters**
        (Required) The number of Mesos masters in your DC/OS cluster. It cannot be changed later. The number of masters behind the load balancer must never be greater than this number, though it can be fewer during failures.
 
-*Note*: On platforms like AWS where internal IPs are allocated dynamically, you should not use a static master list. If a master instance were to terminate for any reason, it could lead to cluster instability.
+**Important:**
+
+* If master_discovery is set to `master_http_loadbalancer`, then [exhibitor_storage_backend](#exhibitor_storage_backend) cannot be set to `static`.
+* On platforms like AWS where internal IPs are allocated dynamically, you should not use a static master list. If a master instance were to terminate for any reason, it could lead to cluster instability.
 
 ### master_dns_bindall
 Indicates whether the master DNS port is open. An open master DNS port listens publicly on the masters. If you are upgrading, set this parameter to `true`.
 
 *  `'master_dns_bindall': 'true'` The master DNS port is open. This is the default value.
 *  `'master_dns_bindall': 'false'` The master DNS port is closed.
+
+### mesos_max_completed_tasks_per_framework
+The number of completed tasks for each framework that the Mesos master will retain in memory. In clusters with a large number of long-running frameworks, retaining too many completed tasks can cause memory issues on the master. If this parameter is not specified, the default Mesos value of 1000 is used.
 
 ### oauth_enabled (DC/OS Only)
 Indicates whether to enable authentication for your cluster. <!-- DC/OS auth -->

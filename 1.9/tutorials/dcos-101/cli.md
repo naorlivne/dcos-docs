@@ -12,7 +12,7 @@ Welcome to part 1 of the DC/OS 101 Tutorial.
 To get started with this tutorial, you should have access to a running DC/OS cluster with at least a single master node and 3 agent nodes (of which one is a public agent node). If you don't have these requirements set up, please follow the [setup instructions](/docs/1.9/installing/) for various cloud providers, on-premise, or vagrant setups.
 If you are unsure which option to choose, then we recommend using the <a href="https://downloads.dcos.io/dcos/stable/aws.html" target="_blank">AWS templates</a>.
 
-**Note**: For this tutorial a setup with a single master node is suffcient, but for running production workloads you should have multiple master nodes.
+**Note**: For this tutorial a setup with a single master node is sufficient, but for running production workloads you should have multiple master nodes.
 
 # Objective
 You have access to your cluster and have already taken a first look at the GUI. You can also access the cluster from your local machine via the DC/OS CLI.
@@ -45,5 +45,5 @@ Here are the DC/OS components that are relevant to this tutorial. A full descrip
 * [Mesos DNS](/docs/1.9/overview/architecture/components/#mesos-dns) provides service discovery within the cluster.
 * [Minuteman](/docs/1.9/overview/architecture/components/#minuteman) is the internal layer 4 load balancer.
 * [Admin Router](/docs/1.9/overview/architecture/components/#admin-router) is an open source NGINX configuration that provides central authentication and proxy to DC/OS services.
-* [Universe](/docs/1.9/overview/architecture/components/#dcos-package-manager) is the package repository that holds the DC/OS services (e.g., Apache Spark of Apache Cassandra) that you can install on your cluster directly from the DC/OS GUI and CLI.
+* [Universe](/docs/1.9/overview/architecture/components/#dcos-package-manager) is the package repository that holds the DC/OS services (e.g. Apache Spark or Apache Cassandra) that you can install on your cluster directly from the DC/OS GUI and CLI.
 
