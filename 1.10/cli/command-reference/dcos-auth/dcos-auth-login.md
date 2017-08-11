@@ -4,7 +4,7 @@ menu_order: 2
 ---
 
 # Description
-Log in to DC/OS authentication. 
+Log in to DC/OS authentication. When you run the [dcos cluster setup](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup) command, you are automatically logged in to DC/OS authentication.
 
 # Usage
 

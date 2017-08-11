@@ -4,7 +4,7 @@ menu_order: 3
 ---
 
 # Description
-List the clusters that are connect to the DC/OS CLI.
+List the clusters that are connected to the DC/OS CLI.
 
 # Usage
 
@@ -24,7 +24,7 @@ dcos cluster list [--attached --json]
 
 | Command | Description |
 |---------|-------------|
-| [dcos cluster](/docs/1.10/cli/command-reference/dcos-cluster/) | Manage your DC/OS clusters. |
+| [dcos cluster](/docs/1.10/cli/command-reference/dcos-cluster/) | Manage DC/OS clusters. |
 
 # Examples
 For examples, see the [Connecting to Multiple Clusters](/docs/1.10/cli/multi-cluster-cli/) documentation.

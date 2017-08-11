@@ -4,7 +4,7 @@ menu_order: 0
 ---
 
 # Description
-Manage DC/OS environment variables. 
+Manage DC/OS environment variables.
 
 # Usage
 
@@ -29,5 +29,3 @@ The severity levels are:
 * warning  Prints warning, error, and critical messages.
 * error    Prints error and critical messages.
 * critical Prints only critical messages to stderr.
-
-# Examples

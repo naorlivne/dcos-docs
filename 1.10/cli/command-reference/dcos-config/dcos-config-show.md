@@ -4,13 +4,13 @@ menu_order: 2
 ---
 
 # Description
-Print the DC/OS configuration file contents.
+Print the DC/OS configuration file contents of the currently [attached](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-attach/) cluster.
 
 # Usage
 
 ```bash
 dcos config show <name> [OPTION]
-``` 
+```
 
 # Options
 
@@ -58,5 +58,3 @@ Here is the output:
 core.dcos_url https://your-cluster-9vqnkrq5pt2n-2781474.cloue-1.elb.amazonaws.com
 core.ssl_verify false
 ```
-
-

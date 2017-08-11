@@ -6,7 +6,7 @@ menu_order: 1
 
 This topic explains how to install DC/OS using the Azure Resource Manager templates.
 
-TIP: To get support on Azure Marketplace-related questions, join the Azure Marketplace [Slack community](http://join.marketplace.azure.com).
+**Tip:** To get support on Azure Marketplace-related questions, join the Azure Marketplace [Slack community](http://join.marketplace.azure.com).
 
 **Important:** Upgrades are not supported with this installation method.
 
@@ -77,17 +77,17 @@ Note that the following commands can be used to run the DC/OS CLI directly on th
 ssh -p2200 azureuser@$MASTERFQDN -L 8000:localhost:80
 
 # Install CLI on the master node and configure with http://localhost
-curl https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.10/dcos -o dcos && 
-sudo mv dcos /usr/local/bin && 
-sudo chmod +x /usr/local/bin/dcos && 
-dcos config set core.dcos_url http://localhost && 
+curl https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.10/dcos -o dcos &&
+sudo mv dcos /usr/local/bin &&
+sudo chmod +x /usr/local/bin/dcos &&
+dcos cluster setup http://localhost &&
 dcos
 
 # Now you can use the DC/OS CLI:
 dcos package search
 ```
 
-## Tear Down the DC/OS cluster
+## Tear down the DC/OS cluster
 
 If you've created a new resource group in the deployment step, it is as easy as this to tear down the cluster and release all of the resources: just delete the resource group. If you have deployed the cluster into an existing resource group, you'll need to identify all resources that belong to the DC/OS cluster and manually delete them.
 

@@ -8,6 +8,7 @@ menu_order: 5
 |---------|-------------|
 | [dcos](/docs/1.10/cli/command-reference/dcos-auth/)   | Manage DC/OS environment variables. |
 | [dcos auth](/docs/1.10/cli/command-reference/dcos-auth/)   |  Manage DC/OS identity and access. |
+| [docs cluster](/docs/1.10/cli/command-reference/dcos-cluster/) |  Manage connections to DC/OS clusters. |
 | [dcos config](/docs/1.10/cli/command-reference/dcos-config/) |  Manage the DC/OS configuration file. |
 | [dcos experimental](/docs/1.10/cli/command-reference/dcos-experimental/) | Manage commands that under development and subject to change. |
 | [dcos help](/docs/1.10/cli/command-reference/dcos-help/)    | Display help information about DC/OS.  |
@@ -17,6 +18,3 @@ menu_order: 5
 | [dcos package](/docs/1.10/cli/command-reference/dcos-package/) | Install and manage DC/OS software packages. |
 | [dcos service](/docs/1.10/cli/command-reference/dcos-service/)  |  Manage DC/OS services.  |
 | [dcos task](/docs/1.10/cli/command-reference/dcos-task/)  |  Manage DC/OS tasks.  |
-
-
-

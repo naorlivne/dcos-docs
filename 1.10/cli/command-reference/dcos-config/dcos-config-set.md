@@ -4,16 +4,16 @@ menu_order: 1
 ---
 
 # Description
-Add or set a DC/OS configuration properties. Here are the available properties.
+Add or set DC/OS configuration properties. Here are the available properties.
 
 | **Property**  | **Description** |
 |-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| core.dcos_acs_token   | This property contains the DC/OS authentication token. When you log into the DC/OS CLI using `dcos auth login`, it stores the authentication token value locally. For more information, see the [documentation](/docs/1.10/security/iam-api/). |
-| core.dcos_url         | This property contains the public master IP of your DC/OS cluster.|
-| core.mesos_master_url | This property specifies the Mesos master URL.|
-| core.pagination       | This property indicates whether to paginate output. |
-| core.ssl_verify       | This property indicates whether to verify SSL certificates or set the path to the SSL certificates. |
-| core.timeout          | This property specifies the request timeout in seconds, with a minimum value of 1 second. By default this is set to 5 seconds.  |
+| `core.dcos_acs_token`   | The DC/OS authentication token. When you log into the DC/OS CLI using `dcos auth login`, it stores the authentication token value locally. For more information, see the [documentation](/docs/1.10/security/iam-api/). |
+| `core.dcos_url`         | The public master URL of your DC/OS cluster.|
+| `core.mesos_master_url` | The Mesos master URL. Defaults to `core.dcos_url`. |
+| `core.pagination`       | Indicates whether to paginate output. Defaults to true.|
+| `core.ssl_verify`       | Indicates whether to verify SSL certificates or set the path to the SSL certificates.|
+| `core.timeout`          | The request timeout in seconds, with a minimum value of 1 second. Defaults to 3 minutes.|
 
 
 # Usage
@@ -42,18 +42,18 @@ None.
 
 # Examples
 
-## Configure CLI to DC/OS Cluster
+## Set request timeout
 
-In this example, the public master IP of the cluster is set to `http://www.yourcloud.com`.
+In this example, the request timeout is set to 5 minutes.
 
 ```bash
-dcos config set core.dcos_url http://www.yourcloud.com
+dcos config set core.timeout 300
 ```
 
 Here is the output:
 
 ```bash
-[core.dcos_url]: changed from 'https://joel-ee-m-elasticl-4s1iwxbuuz86-366325365.us-west-2.elb.amazonaws.com' to 'http://www.yourcloud.com'
+[core.timeout]: set to '300'
 ```
 
 ## Set SSL setting
