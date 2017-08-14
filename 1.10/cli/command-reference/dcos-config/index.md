@@ -4,7 +4,7 @@ menu_order: 2
 ---
 
 # Description
-This command manages the DC/OS configuration file created when you run [dcos cluster setup](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup). The configuration file is located in `~/.dcos/clusters/<cluster_id>/dcos.toml`. If you have not changed any configuration properties you should see this output when you run `dcos config show`:
+This command manages the DC/OS configuration file created when you run [dcos cluster setup](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup). The configuration file is located in `~/.dcos/clusters/<cluster_id>/dcos.toml`. If you have not changed any configuration properties, you should see this output when you run `dcos config show`:
 
     cluster.name <cluster_name>
     core.dcos_acs_token ********
@@ -13,7 +13,7 @@ This command manages the DC/OS configuration file created when you run [dcos clu
 
 
 ## Environment variables
-Configuration properties have corresponding environment variables. If a property is in the "core" section (ex. "core.foo", it corresponds to environment variable DCOS_FOO. All other properties (ex "foo.bar") correspond to environment variable DCOS_FOO_BAR.
+Configuration properties have corresponding environment variables. If a property is in the "core" section (ex. "core.foo"), it corresponds to environment variable DCOS_FOO. All other properties (ex "foo.bar") correspond to environment variable DCOS_FOO_BAR.
 
 Environment variables take precedence over corresponding configuration property.
 

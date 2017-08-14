@@ -4,7 +4,7 @@ menu_order: 2
 ---
 
 # Description
-Attach to a connected DC/OS cluster. When you run the [dcos cluster setup](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup) command, the cluster is automatically attached.
+Attach the CLI to a connected DC/OS cluster. When you run the [dcos cluster setup](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup) command, the cluster is automatically attached.
 
 # Usage
 

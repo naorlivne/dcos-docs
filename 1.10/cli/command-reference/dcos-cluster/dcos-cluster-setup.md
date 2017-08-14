@@ -4,7 +4,7 @@ menu_order: 6
 ---
 
 # Description
-Configure the connection to a DC/OS cluster, attach to the cluster, and log in to DC/OS authentication.
+Configure the connection to a DC/OS cluster, attach to the cluster, and authenticate to DC/OS.
 
 # Usage
 

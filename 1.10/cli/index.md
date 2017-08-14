@@ -4,7 +4,7 @@ nav_title: CLI
 menu_order: 050
 ---
 
-You can use the DC/OS command-line interface (CLI) to manage cluster nodes, install DC/OS packages, inspect the cluster state, and administer DC/OS services and tasks.
+You can use the DC/OS command-line interface (CLI) to manage cluster nodes, install and manage packages, inspect the cluster state, and manage services and tasks.
 
 You can quickly [install](/docs/1.10/cli/install) the CLI from the DC/OS web interface.
 
@@ -38,11 +38,13 @@ Get detailed command description with `dcos <command> --help`.
 These environment variables are supported by the DC/OS CLI and can be set dynamically.
 
 #### DCOS_CONFIG
-The path to the DC/OS configuration file of the currently [attached](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-attach) cluster. By default, the path is `<home-directory>/.dcos/clusters/<cluster_id>/dcos.toml`. If you move the DC/OS configuration file of the currently attached cluster to `/home/jdoe/config/dcos.toml`, you would set the variable with the command:
+The path to a DC/OS configuration file. If you put the DC/OS configuration file in `/home/jdoe/config/dcos.toml`, you would set the variable with the command:
 
 ```bash
 export DCOS_CONFIG=/home/jdoe/config/dcos.toml
 ```
+
+The `DCOS_CONFIG` variable is supported only before you run the first [`dcos cluster setup`](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup) command. `dcos cluster setup` copies the file into `<home-directory>/.dcos/clusters/<cluster_id>/dcos.toml`, after which the variable is ignored. 
 
 #### DCOS_SSL_VERIFY
 Indicates whether to verify SSL certificates or set the path to the SSL certificates. You must set this variable manually. Setting this environment variable is equivalent to setting the `dcos config set core.ssl_verify` option in the DC/OS configuration [file](#configuration-files). For example, to indicate that you want to set the path to SSL certificates:
