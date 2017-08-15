@@ -33,7 +33,10 @@ When using the Docker containerizer, this translates to the Docker "default brid
 
 Bridge mode networking allows you to map host ports to ports inside your containers. It is particularly useful if you are using a container image with fixed port assignments that you can't modify.
 
-**Note:**: The UCR and Docker Containerizer support all network modes.
+**Notes:**:
+
+- The UCR and Docker Containerizer support all network modes.
+- The `Network.name` parameter is only supported with `container` networking.
 
 # Usage
 
