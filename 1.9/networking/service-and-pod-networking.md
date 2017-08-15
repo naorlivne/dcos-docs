@@ -17,6 +17,8 @@ DC/OS services and pods declare `networks` the same way. Three modes of networki
 
 In `host` networking, an application shares the network namespace of the Mesos agent process, typically the host network namespace.
 
+**Note:** The `Network.name` parameter cannot be used with `host` networking.
+
 ## `container` Networking
 
 In container networking, an application should be allocated its own network namespace and IP address;
