@@ -13,7 +13,7 @@ This command manages the DC/OS configuration file created when you run [dcos clu
 
 
 ## Environment variables
-Configuration properties have corresponding environment variables. If a property is in the "core" section (ex. "core.foo"), it corresponds to environment variable DCOS_FOO. All other properties (ex "foo.bar") correspond to environment variable DCOS_FOO_BAR.
+Configuration properties have corresponding environment variables. If a property is in the core section (ex. `core.foo`), it corresponds to environment variable `DCOS_FOO`. All other properties (ex. `foo.bar`) correspond to environment variable `DCOS_FOO_BAR`.
 
 Environment variables take precedence over corresponding configuration property.
 
