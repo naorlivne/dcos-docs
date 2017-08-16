@@ -230,7 +230,7 @@ A DC/OS package is a bundle of metadata that describes how to configure, install
 
 ### <a name="dcos-package-manager"></a>Package Manager
 
-The [DC/OS Package Manager (Cosmos)(https://github.com/dcos/cosmos)) is a component that manages installing and uninstalling packages on a DC/OS cluster.
+The [DC/OS Package Manager (Cosmos)](https://github.com/dcos/cosmos) is a component that manages installing and uninstalling packages on a DC/OS cluster.
 
 - The DC/OS GUI and DC/OS CLI act as clients to interact with the DC/OS Package Manager.
 - The [DC/OS Package Manager API](https://github.com/dcos/cosmos) allows programmatic interaction.

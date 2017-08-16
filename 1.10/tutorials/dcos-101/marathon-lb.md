@@ -13,30 +13,39 @@ menu_order: 6
 # Objective
 In this section you will make app2 available from outside the cluster by running it on a public agent node with Marathon-LB.
 
-
 # Steps
-DC/OS has two different node types: private and public agent nodes. Private agent nodes (usually) do not have ingress access from outside of the cluster, while public agent nodes allow for ingress access from outside the cluster.
+DC/OS has two different node types: 
 
-By default, Marathon starts applications and services on private agent nodes, which cannot be accessed from the outside, the cluster. To expose an app to the outside you usually use a load balancer running on one of the public nodes. You will revisit the topic of load balancing (and different choices for load balancers) later in this tutorial, but for now, you can choose Marathon-LB as the load balancer.
+1. Private agent nodes
+1. Public agent nodes 
+
+Private agent nodes are usually only accessible inside the cluster, while public agent nodes allow for ingress access from outside the cluster.
+
+By default, Marathon starts applications and services on private agent nodes, which cannot be accessed from the outside the cluster. To expose an app to the outside you usually use a load balancer running on one of the public nodes. 
+
+You will revisit the topic of load balancing and the different choices for load balancers later in this tutorial, but for now, you will use [Marathon-LB](https://dcos.io/docs/1.9/tutorials/dcos-101/loadbalancing/) as the load balancer. Marathon-LB uses [HA-Proxy](http://www.haproxy.org/) on a public agent node to provide external access and load balancing for applications running internally in the cluster.
 
   * Install Marathon-LB: `dcos package install marathon-lb`
-  * Check that it is running: `dcos task` and identify the IP adress of the public agent node (Host) where Marathon-LB is running,
-    * Warning: If you started your cluster using a cloud provider (especially AWS) dcos task might show you the private ip address of the host, which is not resolvable from outside the cluster (e.g., if you see something like 10.0.4.8 it is very likely a private address).
-    In that case, you need to retrieve the public IP from your cloud provider. On AWS, go to the console and then search for the instance with the private IP shown by 'dcos task'. The public IP will be listed in the instance description as Public IP.
+  * Check that it is running using `dcos task` and identify the IP address of the public agent node (Host) where Marathon-LB is running
+    * WARNING: If you started your cluster using a cloud provider ( especially AWS ) `dcos task` might show you the private IP address of the host, which is not resolvable from outside the cluster. If the marathon-lb task has an [RFC1918](https://en.wikipedia.org/wiki/Private_network) address beginning with 192.168 or 10 then this is the private IP address.
+
+      In that case, you need to retrieve the public IP from your cloud provider. For AWS, go to the EC2 dashboard and search using the search box for the private IP assigned to the marathon-lb task shown by 'dcos task'. The public IP will be listed in the IPv4 Public IP field for the returned instance.
+  
   * Connect to the webapp (from your local machine) via `<Public IP>:10000`. You should see a rendered version of the web page including the physical node and port app2 is running on.
   * Use the web form to add a new Key:Value pair
   * You can verify the new key was added in two ways:
     1. Check the total number of keys using app1: `dcos task log app1`
     2. Check redis directly
-       1.  [SSH](/docs/1.10/administering-clusters/sshcluster/) into node where redis is running:
-            
+       *  [SSH](/docs/1.10/administering-clusters/sshcluster/) into node where redis is running:
+
            ```bash
            dcos node ssh --master-proxy --mesos-id=$(dcos task  redis --json |  jq -r '.[] | .slave_id')
            ```
-       * As redis is running in Docker container let us list all Docker container `docker ps` and get the ContainerID.
-       * Connect to a bash session to the running container: `sudo docker exec -i -t CONTAINER_ID  /bin/bash`.
-       * Start the redis CLI: `redis-cli`.
-       * Check value is there: `get <newkey>`.
+       * Because Redis is running in a Docker container you can list all the Docker containers using `docker ps` and get the ContainerID of the redis task.
+       * Create a bash session in the running container using the ContainerID from the previous step: `sudo docker exec -i -t CONTAINER_ID  /bin/bash`.
+       * Start the Redis CLI: `redis-cli`.
+       * Check the value is there: `get <newkey>`.
 
 # Outcome
-Congratulations! You've used Marathon-LB to expose your application to the public and added a new key to redis using the web frontend.
+Congratulations! You've used Marathon-LB to expose your application to the public and added a new key to Redis using the web frontend.
+

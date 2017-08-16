@@ -29,3 +29,4 @@ The severity levels are:
 * warning  Prints warning, error, and critical messages.
 * error    Prints error and critical messages.
 * critical Prints only critical messages to stderr.
+

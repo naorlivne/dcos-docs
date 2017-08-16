@@ -13,8 +13,8 @@ This topic provides all available configuration parameters. Except where explici
 | [aws_template_storage_bucket](#aws_template_storage_bucket)            | The name of your S3 bucket. |
 | [aws_template_storage_bucket_path](#aws_template_storage_bucket_path)  | The S3 bucket storage path. |
 | [aws_template_upload](#aws_template_upload)                            | Indicates whether to automatically upload the customized advanced templates to your S3 bucket. |
-| [aws_template_storage_access_key_id](#aws_template_storage_access_key_id)         | The AWS [Access Key ID](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html). |
-| [aws_template_storage_secret_access_key](#aws_template_storage_secret_access_key) | The AWS [Secret Access Key](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html). |
+| [aws_template_storage_access_key_id](#aws_template_storage_access_key_id)         | The AWS [access key ID](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). |
+| [aws_template_storage_secret_access_key](#aws_template_storage_secret_access_key) | The AWS [secret access key](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). |
 | [bootstrap_url](#bootstrap_url)                                       | (Required) The URI path for the DC/OS installer to store the customized DC/OS build files. |
 | [cluster_docker_credentials](#cluster_docker_credentials)             | The dictionary of Docker credentials to pass. |
 | [cluster_docker_registry_url](#cluster_docker_registry_url)           | The custom URL that Mesos uses to pull Docker images from. |
@@ -61,8 +61,7 @@ This topic provides all available configuration parameters. Except where explici
 | [auth_cookie_secure_flag](#auth_cookie_secure_flag-enterprise-dc-os-only-)    | (Enterprise DC/OS Only) Indicates whether to allow web browsers to send the DC/OS authentication cookie through a non-HTTPS connection. |
 | [bouncer_expiration_auth_token_days](#bouncer_expiration_auth_token_days-enterprise-dc-os-only-) | (Enterprise DC/OS Only) Sets the auth token time-to-live (TTL) for Identity and Access Management. |
 | [customer_key](#customer_key-enterprise-dc-os-only-)                       | (Enterprise DC/OS Only) (Required) The Enterprise DC/OS customer key. |
-| [ca_certificate](#ca_certificate-enterprise-dc-os-only-)                   | (Enterprise DC/OS Only) Path to a file in OpenSSL PEM format containing a single X.509 CA certificate. Can be a root (self-issued) certificate or an intermediate (cross-certificate) certificate.
- certificate or an intermediate (cross-certificate) certificate. |
+| [ca_certificate](#ca_certificate-enterprise-dc-os-only-)                   | (Enterprise DC/OS Only) Path to a file in OpenSSL PEM format containing a single X.509 CA certificate. Can be a root (self-issued) certificate or an intermediate (cross-certificate) certificate. |
 | [ca_certificate_key](#ca_certificate_key-enterprise-dc-os-only-)           | (Enterprise DC/OS Only) Path to a file in PKCS#8 PEM format containing the private key (either RSA or ECC) corresponding to the CA certificate in `ca_certificate`. Required if `ca_certificate` is defined. |
 | [ca_certificate_chain](#ca_certificate_chain-enterprise-dc-os-only-)       | (Enterprise DC/OS Only) Path to a file in OpenSSL PEM format containing the complete CA certification chain required for end-entity certificate verification. Must be left undefined if `ca_certificate` is a root CA certificate. Required if `ca_certificate` is defined and the specified certificate is an intermediate CA certificate. |
 | [oauth_enabled](#oauth_enabled-dc-os-only-)                                | (DC/OS Only) Indicates whether to enable authentication for your cluster.  |
@@ -114,7 +113,7 @@ Path to a file in PKCS#8 PEM format containing the private key (either RSA or EC
 
 ### ca_certificate_chain (Enterprise DC/OS Only)
 
-Path to a file in OpenSSL PEM format containing the complete CA certification chain required for end-entity certificate verification. Must be left undefined if `ca_certificate` is a root CA certificate. Required if `ca_certificate` is defined and the specified certificate is an intermediate CA certificate. Required if `ca_certificate` is defined and the specified certificate is an intermediate CA certificate.If the CA certificate is an intermediate CA certificate, the file must contain all CA certificates comprising the complete sequence starting with the CA certificate used to sign the certificate in `ca_certificate` and ending with a root CA certificate (where issuer and subject are the same entity), yielding a gapless certification path. The order is significant and the list must contain at least one certificate.
+Path to a file in OpenSSL PEM format containing the complete CA certification chain required for end-entity certificate verification. Must be left undefined if `ca_certificate` is a root CA certificate. Required if `ca_certificate` is defined and the specified certificate is an intermediate CA certificate. Required if `ca_certificate` is defined and the specified certificate is an intermediate CA certificate. If the CA certificate is an intermediate CA certificate, the file must contain all CA certificates comprising the complete sequence starting with the CA certificate used to sign the certificate in `ca_certificate` and ending with a root CA certificate (where issuer and subject are the same entity), yielding a gapless certification path. The order is significant and the list must contain at least one certificate.
 
 
 ### cluster_docker_credentials

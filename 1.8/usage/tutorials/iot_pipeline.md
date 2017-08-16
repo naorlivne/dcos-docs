@@ -1,31 +1,34 @@
 ---
-post_title: Building an IoT Pipeline
+post_title: Deploying a Load-Balanced Data Pipeline
 menu_order: 2
 ---
 
-
 In this tutorial you install and deploy a containerized Ruby on Rails app named Tweeter. Tweeter is an app similar to Twitter that you can use to post 140-character messages to the internet. Then, you use Zeppelin to perform real-time analytics on the data created by Tweeter.
-
-Tweeter:
-
-*   Stores tweets in the DC/OS [Cassandra][1] service.
-*   Streams tweets to the DC/OS [Kafka][2] service in real-time.
-*   Performs real-time analytics with the DC/OS [Spark][3] and [Zeppelin][4] services.
-
-This tutorial uses DC/OS to launch and deploy these microservices to your cluster.
-
-- The Cassandra database is used on the backend to store the Tweeter app data. 
-- The Kafka publish-subscribe message service receives tweets from Cassandra and routes them to Zeppelin for real-time analytics.
-- The [Marathon load balancer (Marathon-LB)][12] is an HAProxy based load balancer for Marathon only. It is useful when you require external routing or layer 7 load balancing features.
-- Zeppelin is an interactive analytics notebook that works with DC/OS Spark on the backend to enable interactive analytics and visualization. Because it's possible for Spark and Zeppelin to consume all of your cluster resources, you must specify a maximum number of cores for the Zeppelin service.
 
 This tutorial demonstrates how you can build a complete IoT pipeline on DC/OS in about 15 minutes! You will learn:
 
 *   How to install DC/OS services.
 *   How to add apps to DC/OS Marathon.
-*   How to route apps to the public node with the [Marathon load balancer][5].
+*   How to route public traffic to the private application with Marathon-LB.
 *   How your apps are discovered.
-*   How to scale your apps.
+*   How to scale your apps. 
+
+This tutorial uses DC/OS to launch and deploy these microservices to your cluster:
+
+### Cassandra
+The [Cassandra][1] database is used on the backend to store the Tweeter app data. 
+
+### Kafka
+The [Kafka][2] publish-subscribe message service receives tweets from Cassandra and routes them to Zeppelin for real-time analytics.
+
+### Marathon-LB
+[Marathon-LB][12] is an HAProxy based load balancer for Marathon only. It is useful when you require external routing or layer 7 load balancing features.
+
+### Zeppelin
+[Zeppelin][4] is an interactive analytics notebook that works with DC/OS Spark on the backend to enable interactive analytics and visualization. Because it's possible for Spark and Zeppelin to consume all of your cluster resources, you must specify a maximum number of cores for the Zeppelin service.
+
+### Tweeter
+Tweeter stores tweets in the DC/OS Cassandra service, streams tweets to the DC/OS Kafka service in real-time, and performs real-time analytics with the DC/OS [Spark][3] and Zeppelin services.
 
 **Prerequisites:**
 

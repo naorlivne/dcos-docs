@@ -40,7 +40,7 @@ VIPs follow this naming convention:
         
         As you fill in these fields, the service addresses that Marathon sets up will appear at the bottom of the screen. You can assign multiple VIPs to your app by clicking **ADD SERVICE ENDPOINT**.
         
-        ![VIP service definition](/1.9/img/vip-service-definition.png)
+        ![VIP service definition](/docs/1.9/img/vip-service-definition.png)
 
         In the example above, clients can access the service at `my-service.marathon.l4lb.thisdcos.directory:5555`.
         
@@ -48,7 +48,7 @@ VIPs follow this naming convention:
     
 You can click on the **Networking** tab to view networking details for your service.
 
-![VIP output](/1.9/img/vip-service-definition-output.png)
+![VIP output](/docs/1.9/img/vip-service-definition-output.png)
     
 For more information on port configuration, see the [Marathon ports documentation](/docs/1.9/deploying-services/service-ports/).
 
@@ -63,7 +63,7 @@ Follow these steps to view the VIP for Kafka.
 1.  Click **Networking** > **Networks** and select **dcos**.
 1.  Select your task to view details. 
 
-    ![](/1.9/img/vip-service-details.png)
+    ![](/docs/1.9/img/vip-service-details.png)
 
 ### Via the CLI
 
