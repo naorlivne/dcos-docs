@@ -22,7 +22,7 @@ For example, the [DC/OS Diagnostics (3DT) component](/docs/1.9/overview/architec
 
 # Resource Versioning
 
-Some components avoid path versioning altogether and use content negotiation at the resource level to simultaniously support multiple versions of an API at the same path.
+Some components avoid path versioning altogether and use content negotiation at the resource level to simultaneously support multiple versions of an API at the same path.
 
 For example, the [DC/OS Package Manager (Cosmos) component](/docs/1.9/overview/architecture/components/#dcos-package-manager) serves the [Package API](/docs/1.9/deploying-services/package-api/) under the route `/package` and one of its resource paths is `/list`, so the full path to that resource is `/package/list`. The version of the request and desired version of the response are specified respectively by the `Content-Type` and `Accept` HTTP headers:
 
