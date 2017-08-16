@@ -30,4 +30,3 @@ The severity levels are:
 * error    Prints error and critical messages.
 * critical Prints only critical messages to stderr.
 
-# Examples
