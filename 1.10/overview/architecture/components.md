@@ -304,7 +304,7 @@ No software runs perfectly, especially not the first time. Distribute tasks acro
 <p>
   <strong>See Also:</strong>
   <ul>
-    <li><a href="http://www.linuxcommand.org/man_pages/logrotate8.html">Documentation</a></li>
+    <li><a href="https://linux.die.net/man/8/logrotate">Documentation</a></li>
     <li><a href="https://github.com/logrotate/logrotate">Source</a></li>
   </ul>
 </p>
