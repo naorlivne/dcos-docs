@@ -57,7 +57,10 @@ Here are the agent node hardware requirements.
 The agent nodes must also have: 
 
 - A `/var` directory with 10 GB or more of free space. This directory is used by the sandbox for both [Docker and DC/OS Universal container runtime](/docs/1.10/deploying-services/containerizers/).
-- Network Access to a public Docker repository or to an internal Docker registry.
+
+- The agent's work directory, `/var/lib/mesos/slave`, should be on a separate device. This protects all the other services from a task overflowing the disk. The agent does not enforce the disk resource. This may change in the future, so we recommend assigning the disk resource in your apps and jobs.
+
+- Network access to a public Docker repository or to an internal Docker registry.
 
 *   On RHEL 7 and CentOS 7, firewalld must be stopped and disabled. It is a known <a href="https://github.com/docker/docker/issues/16137" target="_blank">Docker issue</a> that firewalld interacts poorly with Docker. For more information, see the <a href="https://github.com/docker/docker/blob/v1.6.2/docs/sources/installation/centos.md#firewalld" target="_blank">Docker CentOS firewalld</a> documentation.
 
