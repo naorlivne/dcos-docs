@@ -85,6 +85,8 @@ High speed internet access is recommended for DC/OS installation. A minimum 10 M
 
 # Software Prerequisites
 
++**Tip:** Refer to [this shell script](https://raw.githubusercontent.com/dcos/dcos/1.1.10-beta1/cloud_images/centos7/install_prereqs.sh) for an example of how to install the software requirements for DC/OS masters and agents on a CentOS 7 host.
+
 ## All Nodes
 
 ### Docker
@@ -152,9 +154,9 @@ Before installing DC/OS, you must ensure that your bootstrap node has the follow
 
 Download and save the [DC/OS setup file][3] to your bootstrap node. This file is used to create your customized DC/OS build file.
 
-### Docker Nginx (advanced installer)
+### Docker NGINX (advanced installer)
 
-For advanced install only, install the Docker Nginx image with this command:
+For advanced install only, install the Docker NGINX image with this command:
 
 ```bash
 sudo docker pull nginx
