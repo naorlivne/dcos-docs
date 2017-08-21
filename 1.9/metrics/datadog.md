@@ -18,16 +18,17 @@ The Datadog metrics plugin for DC/OS supports sending metrics from the DC/OS met
    -  **macOS:** Get the installer from [Git downloads](http://git-scm.com/download/mac).
    -  **Unix/Linux:** See these <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank">installation instructions</a>.
 
-1. Clone the DC/OS metrics repository:
+1. Get the DC/OS metrics repository:
 
    ```bash
-   git clone git@github.com:dcos/dcos-metrics
+   go get github.com/dcos/dcos-metrics
    ```
    
 1. Navigate to the `dcos-metrics` repository and run the build command:
 
    ```bash
-   cd dcos-metrics && make && make plugins
+   cd $(go env GOPATH)/src/github.com/dcos/dcos-metrics
+   make && make plugins
    ```
 
    The plugin is available in the build directory:
