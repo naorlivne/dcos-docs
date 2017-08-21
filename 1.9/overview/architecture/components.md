@@ -182,7 +182,7 @@ DC/OS includes built-in orchestration of the most commonly used high level conta
 
 Container runtimes execute and manage machine level processes in isolated operating system level environments.
 
-DC/OS supports multiple container runtimes using [Mesos' containerizer abstraction](http://mesos.apache.org/documentation/latest/containerizer/).
+DC/OS supports multiple container runtimes using [Mesos' containerizer abstraction](http://mesos.apache.org/documentation/latest/containerizers/).
 
 <div data-role="collapsible">
 <h2 id="universal-container-runtime">Universal Container Runtime</h2>
