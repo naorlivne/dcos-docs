@@ -1,4 +1,5 @@
 ---
+post_title: Virtual Networks
 nav_title: Virtual Networks
 feature_maturity: preview
 menu_order: 04
