@@ -54,7 +54,7 @@ The DC/OS installation creates these folders:
 1.  Download the [DC/OS installer][1] to your bootstrap node.
 
     ```bash
-    curl -O https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh
+    curl -O https://downloads.dcos.io/dcos/stable/1.9.2/dcos_generate_config.sh
     ```
 
 1.  From your terminal, start the DC/OS GUI installer with this command.
