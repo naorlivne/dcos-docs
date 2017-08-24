@@ -33,27 +33,61 @@ Available DC/OS commands:
 Get detailed command description with `dcos <command> --help`.
 ```
 
+# Displaying the DC/OS CLI version
+
+To display the DC/OS CLI version, run:
+
+`dcos --version`
+
+
+# DC/OS CLI version and configuration files
+
+DC/OS CLI 0.4.x and 0.5.x follow different conventions for the location of configuration files. 
+
+DC/OS CLI 0.4.x has a single configuration file, which by default is stored in `~/.dcos/dcos.toml`. In DC/OS CLI 0.4.x you can optionally change the location of the configuration file using the [`DCOS_CONFIG`](#dcos_config) environment variable.
+
+DC/OS CLI 0.5.x has a configuration file for each connected cluster, which by default are stored in `~/.dcos/clusters/<cluster_id>/dcos.toml`. In DC/OS CLI 0.5.x you can optionally change the base portion (`~/.dcos`) of the configuration directory using the [`DCOS_DIR`](#dcos_dir) environment variable.
+
 # Environment variables
 
-These environment variables are supported by the DC/OS CLI and can be set dynamically.
+The DC/OS CLI supports the following environment variables, which can be set dynamically.
 
-#### DCOS_CONFIG
-The path to a DC/OS configuration file. If you put the DC/OS configuration file in `/home/jdoe/config/dcos.toml`, you would set the variable with the command:
+#### `DCOS_CONFIG` (DC/OS CLI O.4.x only)
+
+The path to a DC/OS configuration file. If you put the DC/OS configuration file in `/home/jdoe/config/dcos.toml`, set the variable with the command:
 
 ```bash
 export DCOS_CONFIG=/home/jdoe/config/dcos.toml
 ```
 
-The `DCOS_CONFIG` variable is supported only before you run the first [`dcos cluster setup`](/docs/1.10/cli/command-reference/dcos-cluster/dcos-cluster-setup) command. `dcos cluster setup` copies the file into `<home-directory>/.dcos/clusters/<cluster_id>/dcos.toml`, after which the variable is ignored. 
+If you have `DCOS_CONFIG` configured, updating to the DC/OS CLI 0.5.x and running a `dcos` commands triggers conversion from old to new configuration structure. The configuration file is moved from `$DCOS_CONFIG` to `$DCOS_DIR/clusters/<cluster_id>/dcos.toml`. After conversion, `DCOS_CONFIG` is no longer honored. Also see [Backwards compatibility](#backwards-compatibility).
 
-#### DCOS_SSL_VERIFY
+#### `DCOS_DIR` (DC/OS CLI O.5.x only)
+
+The path to a DC/OS configuration directory. If you want the DC/OS configuration directory to be `/home/jdoe/config`, set the variable with the command:
+
+```bash
+export DCOS_DIR=/home/jdoe/config
+```
+
+1. Optionally set `DCOS_DIR` and run `dcos cluster setup` command.
+
+    ```
+    export DCOS_DIR=<path/to/config_dir> (optional, default when not set is ~/.dcos)
+    dcos cluster setup <url>
+    ```
+
+   This setting generates and updates per cluster configuration under `$DCOS_DIR/clusters/<cluster_id>`. Sets newly set up cluster as the attached one.
+
+
+#### `DCOS_SSL_VERIFY`
 Indicates whether to verify SSL certificates or set the path to the SSL certificates. You must set this variable manually. Setting this environment variable is equivalent to setting the `dcos config set core.ssl_verify` option in the DC/OS configuration [file](#configuration-files). For example, to indicate that you want to set the path to SSL certificates:
 
 ```bash
 export DCOS_SSL_VERIFY=false
 ```
 
-#### DCOS_LOG_LEVEL
+#### `DCOS_LOG_LEVEL`
 Prints log messages to stderr at or above the level indicated. This is equivalent to the `--log-level` command-line option. The severity levels are:
 
 *   **debug** Prints all messages to stderr, including informational, warning, error, and critical.
@@ -68,13 +102,14 @@ For example, to set the log level to warning:
 export DCOS_LOG_LEVEL=warning
 ```
 
-#### DCOS_DEBUG
+#### `DCOS_DEBUG`
 Indicates whether to print additional debug messages to `stdout`. By default this is set to `false`. For example:
 
 ```bash
 export DCOS_DEBUG=true
 ```
 
-# <a name="configuration-files"></a>Configuration files
+## Backwards compatibility
 
-The DC/OS CLI stores its configuration files in a directory called `~/.dcos/clusters/<cluster_id>/dcos.toml` within your HOME directory. 
+1. Before you call `dcos cluster setup <url>`, you can change the configuration pointed to by `$DCOS_CONFIG` using `dcos config set`. This command prints a warning message saying the command is deprecated and recommends using `dcos cluster setup`.
+2. After you call `dcos cluster setup`, (or after [automatic conversion](#dcos_config) has occurred), if you attempt to update the cluster configuration using a `dcos config set` command, the command prints a warning message saying the command is deprecated and cluster configuration state may now be corrupted.
