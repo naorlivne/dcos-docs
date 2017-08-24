@@ -1,7 +1,7 @@
 ---
 post_title: Understanding Resources
 nav_title: Understanding Resources
-menu_order: 8
+menu_order: 7
 ---
 
 # Prerequisites
