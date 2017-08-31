@@ -4,7 +4,7 @@ menu_order: 0
 ---
 
 # Description
-Manage DC/OS environment variables. 
+Manage DC/OS environment variables.
 
 # Usage
 
