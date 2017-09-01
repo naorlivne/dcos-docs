@@ -40,15 +40,17 @@ To supply credentials to pull from a private Docker registry, create an archive 
     cp docker.tar.gz /etc/
     ```
 
-**Important:** The URI must be accessible by all nodes that will start your application. You can distribute the file to the local filesystem of all nodes, for example via RSYNC/SCP, or store it on a shared network drive like [Amazon S3](http://aws.amazon.com/s3/). Consider the security implications of your chosen approach carefully.
+    **Important:** The URI must be accessible by all nodes that will start your application. You can distribute the file to the local filesystem of all nodes, for example via RSYNC/SCP, or store it on a shared network drive like [Amazon S3](http://aws.amazon.com/s3/). Consider the security implications of your chosen approach carefully.
 
 ## Step 2: Add URI path to service definition
 
 1. Add the path to the archive file login credentials to your service definition.
 
     ```bash
-    "uris": [
-       "file:///etc/docker.tar.gz"
+    "fetch": [
+      {
+        "uri": "file:///etc/docker.tar.gz"
+      }
     ]
     ```
 
@@ -63,28 +65,29 @@ To supply credentials to pull from a private Docker registry, create an archive 
       "container": {
         "type": "DOCKER",
         "docker": {
-          "image": "some.docker.host.com/namespace/repo",
-          "network": "HOST"
+          "image": "some.docker.host.com/namespace/repo"
         }
       },
-      "uris":  [
-          "file:///etc/docker.tar.gz"
+      "fetch": [
+        {
+          "uri": "file:///etc/docker.tar.gz"
+        }
       ]
     }
     ```
 
-1. The Docker image will now pull using the security credentials you specified.
+    The Docker image will now pull using the provided security credentials.
 
 <a name="secret-store-instructions"></a>
 # Referencing private Docker registry credentials in the secrets store (Enterprise DC/OS only)
 
 Follow these steps to add your Docker registry credentials to the [Enterprise DC/OS secrets store](https://docs.mesosphere.com/1.10/security/secrets/), and then reference that secret in your service definition.
 
-**Note:** This functionality is only available with the [Universal Containerizer Runtime](/docs/1.10/deploying-services/containerizers/ucr/). If you need to use the Docker Containerizer, follow the [URI instructions](#uri-instructions) above.
+**Note:** This functionality is available only with the [Universal Containerizer Runtime](/docs/1.10/deploying-services/containerizers/ucr/). If you need to use the Docker Engine, follow the [URI instructions](#uri-instructions) above.
 
 ## Step 1: Create a credentials file
 
-1.  Log in to your private registry manually. This will create a `~/.docker` directory and a `~/.docker/config.json` file.
+1.  Manually log in to your private registry. This creates a `~/.docker` directory and a `~/.docker/config.json` file.
 
     ```bash
     docker login some.docker.host.com
@@ -117,7 +120,7 @@ Follow these steps to add your Docker registry credentials to the [Enterprise DC
 
 1. Add the `config.json` file to the DC/OS secret store. [Learn more about creating secrets](https://docs.mesosphere.com/1.9/security/secrets/create-secrets/).
 
-   **Note:** As of DC/OS version 10.0, you can only add a file to the secret store via the DC/OS CLI.
+   **Note:** As of DC/OS version 1.10.0, you can add a file to the secret store only using the DC/OS CLI.
 
    ```bash
    dcos security secrets create --value-file=config.json <path/to/secret>
@@ -129,7 +132,7 @@ Follow these steps to add your Docker registry credentials to the [Enterprise DC
    dcos security secrets create --value-file=config.json mesos-docker/pullConfig
    ```
 
-## Step 2: Add the secret to your service or pod Definition
+## Step 2: Add the secret to your service or pod definition
 
 ### For a service
 
@@ -167,9 +170,9 @@ Follow these steps to add your Docker registry credentials to the [Enterprise DC
    dcos marathon app add <svc-name>.json
    ```
 
-   The Docker image will now pull using the provided security credentials given.
+   The Docker image will now pull using the provided security credentials.
 
-### For a Pod
+### For a pod
 
 1. Add a location for the secret in the `secrets` parameter and a reference to the secret in the `containers.image.pullConfig` parameter.
 
@@ -218,4 +221,4 @@ Follow these steps to add your Docker registry credentials to the [Enterprise DC
       dcos marathon pod add <pod-name>.json
       ```
 
-   The Docker image will now pull using the provided security credentials given.
+   The Docker image will now pull using the provided security credentials.

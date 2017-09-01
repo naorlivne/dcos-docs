@@ -3,7 +3,7 @@ post_title: Deploying a Docker-based Service
 menu_order: 100
 ---
 
-In this tutorial, a custom Docker app is created and added to Marathon.
+In this tutorial, you create a custom Docker app and add it to Marathon.
 
 ## Prerequisites
 
@@ -105,21 +105,25 @@ In this tutorial, a custom Docker app is created and added to Marathon.
 
     ```json
     {
-        "id": "nginx",
-        "container": {
+      "id": "nginx",
+      "container": {
         "type": "DOCKER",
         "docker": {
-              "image": "mesosphere/simple-docker",
-              "network": "BRIDGE",
-              "portMappings": [
-                { "hostPort": 80, "containerPort": 80, "protocol": "tcp"}
-              ]
-            }
+          "image": "mesosphere/simple-docker",
         },
-        "acceptedResourceRoles": ["slave_public"],
-        "instances": 1,
-        "cpus": 0.1,
-        "mem": 64
+        "portMappings": [
+          { "hostPort": 80, "containerPort": 80, "protocol": "tcp" }
+        ]
+      },
+      "networks": [
+        {
+          "mode": "container/bridge"
+        }
+      ],
+      "acceptedResourceRoles": ["slave_public"],
+      "instances": 1,
+      "cpus": 0.1,
+      "mem": 64
     }
     ```
 
@@ -143,7 +147,7 @@ In this tutorial, a custom Docker app is created and added to Marathon.
     
 1.  If you used the [AWS CloudFormation templates](/docs/1.10/installing/cloud/aws/), you must reconfigure the health check on the public ELB to expose the app to the port specified in your app definition (e.g. port 80). 
 
-1.  Go to your public agent to see the site running. For information about how to find your public agent IP, see the [documentation](/docs/1.10/administering-clusters/locate-public-agent/).
+1.  Go to your public agent to see the site running. To find your public agent IP address, see [Finding a Public Agent IP](/docs/1.10/administering-clusters/locate-public-agent/).
 
     You should see the following message in your browser: 
     

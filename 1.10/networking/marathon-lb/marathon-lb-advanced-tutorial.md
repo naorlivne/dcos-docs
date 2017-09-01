@@ -55,18 +55,18 @@ Set up your internal load balancer. To do this, we must first specify some confi
           "id": "nginx-external",
           "container": {
             "type": "DOCKER",
+            "portMappings": [
+              { "hostPort": 0, "containerPort": 80, "servicePort": 10000 }
+            ],
             "docker": {
               "image": "nginx:1.7.7",
-              "network": "BRIDGE",
-              "portMappings": [
-                { "hostPort": 0, "containerPort": 80, "servicePort": 10000 }
-              ],
               "forcePullImage":true
             }
           },
           "instances": 1,
           "cpus": 0.1,
           "mem": 65,
+          "networks": [ { "mode": "container/bridge" } ],
           "healthChecks": [{
               "protocol": "HTTP",
               "path": "/",

@@ -3,10 +3,10 @@ post_title: Marathon Configuration Reference
 menu_order: 000
 ---
 
-This topic provides all available properties for Marathon application definitions and an [example JSON file with all properties shown](#example).
+This topic lists all available properties for Marathon application definitions and an example JSON file with all properties shown.
 
-- [Properties](#properties)
-- [Example JSON](#examples)
+- [Marathon Properties](#marathon-properties)
+- [Example](#example)
 
 # Marathon Properties
 
@@ -39,24 +39,25 @@ Specifies constraint operators which control where apps can run, to optimize for
 ### container
 The container information. 
 
-- **type** The containerizer type, either `MESOS` or `DOCKER`. For more information, see the [Containerizers documentation](/docs/1.10/deploying-services/containerizers/). 
+- **type** The containerizer runtime type, either `MESOS` or `DOCKER`. For more information, see [Using Containerizers](/docs/1.10/deploying-services/containerizers/).
+
+- **portMappings** The port mappings between host and container.  A port mapping is a tuple that contains a host port (`hostPort`), container port (`containerPort`), service port (`servicePort`), and protocol (`protocol`).  Port mappings are similar to passing `-p` into the Docker command line to specify a relationship between a port on the host machine and a port inside the container. 
+
+    - **containerPort** The container port (e.g., `8080`).
+    - **hostPort** The host port (e.g., `0`). The default value is `0`. In `USER` mode, the hostPort is not required, but if left unspecified Marathon will not randomly allocate a port.
+    - **servicePort** The service port (e.g., `9000`).
+    - **protocol** The HTTP protocol, either `tcp` or `udp`.
+
 - **docker** The Docker container information.
     
+    - **forcePullImage** Whether to pull the image, regardless if it is already available on the local system.
     - **image** The path to the Docker image.
-    - **network** The networking type, either `HOST`, `BRIDGE`, or `USER`. For more information, see the [Docker networking documentation](https://docs.docker.com/engine/userguide/networking/).
-    - **portMappings** The port mappings between host and container.  A port mapping is a tuple that contains a host port (`hostPort`), container port (`containerPort`), service port (`servicePort`), and protocol (`protocol`).  Port mappings are similar to passing `-p` into the Docker command line to specify a relationship between a port on the host machine and a port inside the container. 
-    
-        - **containerPort** The container port (e.g., `8080`).
-        - **hostPort** The host port (e.g., `0`). The default value is `0`. In `USER` mode, the hostPort is not required, but if left unspecified Marathon will not randomly allocate a port.
-        - **servicePort** The service port (e.g., `9000`).
-        - **protocol** The HTTP protocol, either `tcp` or `udp`.
-        
     - **privileged** Whether to give extended privileges to this container. For more information, see the [Docker run command](https://docs.docker.com/engine/reference/commandline/run/).
     
       - `"privileged": false` Do not give extended privileges. This is the default value.
       - `"privileged": true` Give extended privileges. 
-      
-    - **parameters** Specify command-line options for the `docker run` command executed by the Mesos containerizer. Parameters passed in this manner are not guaranteed to be supported in the future, as Mesos may not always interact with Docker via the CLI.
+    - **parameters** Command-line options for the `docker run` command executed by the Mesos containerizer. Parameters passed in this manner are not guaranteed to be supported in the future, as Mesos may not always interact with Docker via the CLI.
+    - **pullConfig** A secret whose value is a stringified JSON object in a Secret Store. 
     
 - **volumes** The persistent volume.  
  
@@ -117,13 +118,6 @@ The allowable format is represented by the following regular expression:
 ### instances
 The number of instances. You can change this number as needed to scale the application.
 
-### ipAddress
-Declares that your application will use [virtual networking](/docs/1.10/networking/load-balancing-vips/virtual-networks/).
-
-- **groups** The name of logically-related interfaces that are allowed to communicate among themselves. Network traffic is allowed between two container interfaces that share at least one network group. For example, you can create separate groups for isolating development, testing, quality assurance, production, and deployment environments.
-- **labels** Metadata to be used by Isolator or IPAM (e.g., rack).
-- **networkName** Name of the network that Mesos uses to determine the network that the container joins. It is up to Mesos to decide how to interpret this field. If `ipAddress` is defined and `networkName` is not, then the value of `networkName` defaults to the value of the default_network_name command-line flag (if specified).
-
 ### labels
 Attach metadata to apps  to expose additional information to other services. For example, you could label apps `"environment": "staging"` to mark services by their position in the pipeline.
 
@@ -135,7 +129,10 @@ This prevents sandboxes associated with consecutively failing tasks from filling
 ### mem
 The amount of memory (MB) required per instance.
 
-### portsDefinitions
+### networks
+Specify networking modes. Three modes of networking are supported: `host`, `container`, `container/bridge`.
+
+### portDefinitions
 An array of required port resources on the host. The portDefinitions array serves multiple roles:
 
 - Determines how many dynamic ports are allocated for each task.
@@ -200,26 +197,25 @@ Here is an example JSON application that contains all fields.
         "type": "DOCKER",
         "docker": {
             "image": "group/image",
-            "network": "BRIDGE",
-            "portMappings": [
-                {
-                    "containerPort": 8080,
-                    "hostPort": 0,
-                    "servicePort": 9000,
-                    "protocol": "tcp"
-                },
-                {
-                    "containerPort": 161,
-                    "hostPort": 0,
-                    "protocol": "udp"
-                }
-            ],
             "privileged": false,
             "parameters": [
                 { "key": "a-docker-option", "value": "xxx" },
                 { "key": "b-docker-option", "value": "yyy" }
             ]
         },
+        "portMappings": [
+            {
+                "containerPort": 8080,
+                "hostPort": 0,
+                "servicePort": 9000,
+                "protocol": "tcp"
+            },
+            {
+                "containerPort": 161,
+                "hostPort": 0,
+                "protocol": "udp"
+            }
+        ],
         "volumes": [
             {
                 "containerPath": "data",
@@ -302,18 +298,8 @@ Here is an example JSON application that contains all fields.
         "minimumHealthCapacity": 0.5,
         "maximumOverCapacity": 0.2
     },
-    "ipAddress": {
-        "groups": [
-            "backend"
-        ],
-        "labels": {
-            "color":   "purple",
-            "flavor":  "grape",
-            "org":     "product",
-            "service": "myApp",
-            "tier":    "backend"
-        },
-        "networkName": "dev-network"
-    }
+    "networks": [
+      { "mode": "container/bridge" }
+  ]
 }
 ```

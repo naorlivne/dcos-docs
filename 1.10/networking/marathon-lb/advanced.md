@@ -69,22 +69,23 @@ To specify a global template:
 
 To create a template for an individual app, modify the application definition. In the example below, the default template for the external NGINX application definition (`nginx-external.json`) has been modified to *disable* HTTP keep-alive. While this is an artificial example, there may be cases where you need to override certain defaults per-application.
 
+```json
     {
       "id": "nginx-external",
       "container": {
         "type": "DOCKER",
+        "portMappings": [
+          { "hostPort": 0, "containerPort": 80, "servicePort": 10000 }
+        ],
         "docker": {
           "image": "nginx:1.7.7",
-          "network": "BRIDGE",
-          "portMappings": [
-            { "hostPort": 0, "containerPort": 80, "servicePort": 10000 }
-          ],
           "forcePullImage":true
         }
       },
       "instances": 1,
       "cpus": 0.1,
       "mem": 65,
+      "networks": [ { "mode": "container/bridge" } ],
       "healthChecks": [{
           "protocol": "HTTP",
           "path": "/",
@@ -99,15 +100,17 @@ To create a template for an individual app, modify the application definition. I
         "HAPROXY_0_BACKEND_HTTP_OPTIONS":"  option forwardfor\n  no option http-keep-alive\n      http-request set-header X-Forwarded-Port %[dst_port]\n  http-request add-header X-Forwarded-Proto https if { ssl_fc }\n"
       }
     }
+```
 
 Other options you may want to specify include enabling the [sticky option][3], [redirecting to HTTPS][4], or [specifying a vhost][5].
 
+```json
     "labels":{
       "HAPROXY_0_STICKY":true,
       "HAPROXY_0_REDIRECT_TO_HTTPS":true,
       "HAPROXY_0_VHOST":"nginx.mesosphere.com"
     }
-
+```
 
 ## SSL Support
 
@@ -115,10 +118,12 @@ Marathon-LB supports SSL, and you may specify multiple SSL certificates per fron
 
 If you do not specify an SSL certificate, Marathon-LB will generate a self-signed certificate at startup. If you are using multiple SSL certificates, you can select the SSL certificate per app service port by specifying the `HAPROXY_{n}_SSL_CERT` parameter, which corresponds to the file path for the SSL certificates specified. For example, you might have:
 
+```json
     "labels":{
       "HAPROXY_0_VHOST":"nginx.mesosphere.com",
       "HAPROXY_0_SSL_CERT":"/etc/ssl/certs/nginx.mesosphere.com"
     }
+```
 
 The SSL certificates must be pre-loaded into the container for Marathon-LB to load them. You can do this by building your own image of Marathon-LB, rather than using the Mesosphere-provided image.
 
